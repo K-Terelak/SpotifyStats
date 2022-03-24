@@ -41,6 +41,7 @@ class SearchViewModel @Inject constructor(
             delay(800L)
             _searchState.value = searchState.value.copy(query = query)
 
+            if (query.isNotBlank())
             searchItems(q = query)
         }
     }
@@ -61,13 +62,15 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     Log.d("searchArtists", "SUCCESS")
                     result.data?.searchItems?.let { searchItems.addAll(it) }
+                    _searchState.value = searchState.value.copy(
+                        itemsError = ""
+                    )
                 }
                 is Resource.Error -> {
                     Log.e("searchArtists", "ERROR ${result.error}")
                     _searchState.value = searchState.value.copy(
                         itemsError = result.error ?: "Unknown error"
                     )
-
                 }
             }
 
@@ -75,6 +78,9 @@ class SearchViewModel @Inject constructor(
                 is Resource.Success -> {
                     Log.d("searchTracks", "SUCCESS")
                     result.data?.searchItems?.let { searchItems.addAll(it) }
+                    _searchState.value = searchState.value.copy(
+                        itemsError = ""
+                    )
                 }
                 is Resource.Error -> {
                     Log.e("searchTracks", "ERROR ${result.error}")

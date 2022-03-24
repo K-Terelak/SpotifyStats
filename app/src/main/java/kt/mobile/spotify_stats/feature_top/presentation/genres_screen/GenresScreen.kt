@@ -74,7 +74,7 @@ fun GenresScreen(
                     artistImage = item.genreArtist.images.firstOrNull()?.url,
                     artistId = item.genreArtist.id,
                     artistName = item.genreArtist.name,
-                    myTop = item.artistIndex,
+                    myTop = item.artistIndex+1,
                     imageLoader = imageLoader,
                     onNavigate = onNavigate
                 )

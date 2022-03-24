@@ -20,8 +20,8 @@ class SearchRepositoryImpl(
             if (response.isSuccessful) {
                 Resource.Success(data = response.body()?.toMySearchItems())
             } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
+                response.errorBody()?.let {
+                    Resource.Error(error = "Couldn't load:")
                 } ?: Resource.Error(error = "Unknown Error")
             }
         } catch (e: IOException) {
@@ -31,9 +31,7 @@ class SearchRepositoryImpl(
             )
         } catch (e: HttpException) {
             Log.e("searchArtists", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = "Couldn\'t load")
         }
     }
 
@@ -45,8 +43,8 @@ class SearchRepositoryImpl(
             if (response.isSuccessful) {
                 Resource.Success(data = response.body()?.toMySearchItems())
             } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
+                response.errorBody()?.let {
+                    Resource.Error(error = "Couldn't load")
                 } ?: Resource.Error(error = "Unknown Error")
             }
         } catch (e: IOException) {
@@ -56,9 +54,7 @@ class SearchRepositoryImpl(
             )
         } catch (e: HttpException) {
             Log.e("searchTracks", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = "Couldn't load")
         }
     }
 }
