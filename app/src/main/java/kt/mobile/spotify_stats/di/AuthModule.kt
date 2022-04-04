@@ -12,9 +12,7 @@ import kt.mobile.spotify_stats.feature_auth.domain.use_case.AuthUseCases
 import kt.mobile.spotify_stats.feature_auth.domain.use_case.GetAuthTokenUseCase
 import kt.mobile.spotify_stats.feature_auth.domain.use_case.GetRefreshTokenUseCase
 import kt.mobile.spotify_stats.feature_auth.domain.use_case.LogoutUseCase
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -22,18 +20,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AuthModule {
 
-    @Provides
+
     @Singleton
+    @Provides
     fun provideAuthApi(
-        @Named("bez") client: OkHttpClient,
-    ): AuthApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(AuthApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(AuthApi::class.java)
-    }
+        @Named("retrofitAuth") retrofit: Retrofit
+    ): AuthApi = retrofit.create(AuthApi::class.java)
+
 
     @Provides
     @Singleton

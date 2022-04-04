@@ -35,9 +35,4 @@ interface AuthApi {
         refresh_token: String
     ): Response<AuthRefreshTokenResponse>
 
-
-    companion object {
-        const val BASE_URL = "https://accounts.spotify.com/"
-    }
-
 }

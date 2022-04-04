@@ -6,6 +6,7 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.spotify.sdk.android.auth.AuthorizationClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
@@ -89,6 +90,7 @@ class AuthViewModel @Inject constructor(
                         isLogged = false,
                         isRefresh = false
                     )
+                    AuthorizationClient.clearCookies(context)
                     context?.finish()
                 }
                 is Resource.Error -> {

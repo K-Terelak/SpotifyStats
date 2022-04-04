@@ -10,9 +10,7 @@ import kt.mobile.spotify_stats.feature_track.domain.repository.TrackRepository
 import kt.mobile.spotify_stats.feature_track.domain.use_case.GetTrackFeaturesUseCase
 import kt.mobile.spotify_stats.feature_track.domain.use_case.GetTrackUseCase
 import kt.mobile.spotify_stats.feature_track.domain.use_case.TrackUseCases
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -20,18 +18,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object TrackModule {
 
-    @Provides
+
     @Singleton
-    fun provideTrackApi(
-        @Named("token") client: OkHttpClient,
-    ): TrackApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(TrackApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(TrackApi::class.java)
-    }
+    @Provides
+    fun provideTrackApi(@Named("retrofitToken") retrofit: Retrofit): TrackApi =
+        retrofit.create(TrackApi::class.java)
+
 
     @Provides
     @Singleton

@@ -11,9 +11,7 @@ import kt.mobile.spotify_stats.feature_top.domain.use_case.GetTopArtistsUseCase
 import kt.mobile.spotify_stats.feature_top.domain.use_case.GetTopItemsUseCase
 import kt.mobile.spotify_stats.feature_top.domain.use_case.GetTracksFeaturesUseCase
 import kt.mobile.spotify_stats.feature_top.domain.use_case.TopUseCases
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -21,18 +19,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object TopModule {
 
-    @Provides
+
     @Singleton
-    fun provideTopApi(
-        @Named("token") client: OkHttpClient,
-    ): TopApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(TopApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(TopApi::class.java)
-    }
+    @Provides
+    fun provideTopApi(@Named("retrofitToken")retrofit: Retrofit): TopApi = retrofit.create(TopApi::class.java)
+
 
     @Provides
     @Singleton

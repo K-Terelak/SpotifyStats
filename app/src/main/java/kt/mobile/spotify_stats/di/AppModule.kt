@@ -18,9 +18,13 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.util.Constants
+import kt.mobile.spotify_stats.core.util.Constants.BASE_API_URL
+import kt.mobile.spotify_stats.core.util.Constants.BASE_AUTH_URL
 import kt.mobile.spotify_stats.core.util.Constants.SHARED_PREF_NAME
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 import javax.inject.Named
 import javax.inject.Singleton
@@ -93,6 +97,28 @@ object AppModule {
                 add(SvgDecoder(app))
             }.build()
     }
+
+
+    @Singleton
+    @Provides
+    @Named("retrofitToken")
+    fun provideRetrofitToken(@Named("token") okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_API_URL)
+            .client(okHttpClient)
+            .build()
+
+    @Singleton
+    @Provides
+    @Named("retrofitAuth")
+    fun provideRetrofitAuth(@Named("bez") okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_AUTH_URL)
+            .client(okHttpClient)
+            .build()
+
 
     @Provides
     @Singleton

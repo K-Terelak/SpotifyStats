@@ -31,9 +31,7 @@ class GlobalRepositoryImpl(
             )
         } catch (e: HttpException) {
             Log.e("getTopGlobal", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+                Resource.Error(error = "Couldn't load")
         }
     }
 }

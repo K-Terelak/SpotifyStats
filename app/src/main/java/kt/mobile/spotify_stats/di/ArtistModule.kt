@@ -12,9 +12,7 @@ import kt.mobile.spotify_stats.feature_artist.domain.use_case.ArtistUseCases
 import kt.mobile.spotify_stats.feature_artist.domain.use_case.GetArtistUseCase
 import kt.mobile.spotify_stats.feature_artist.domain.use_case.GetArtistsTopTracksUseCase
 import kt.mobile.spotify_stats.feature_artist.domain.use_case.GetRelatedArtistsUseCase
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -23,18 +21,11 @@ import javax.inject.Singleton
 object ArtistModule {
 
 
-    @Provides
     @Singleton
-    fun provideArtistApi(
-        @Named("token") client: OkHttpClient,
-    ): ArtistApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(ArtistApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(ArtistApi::class.java)
-    }
+    @Provides
+    fun provideArtistApi(@Named("retrofitToken") retrofit: Retrofit): ArtistApi =
+        retrofit.create(ArtistApi::class.java)
+
 
     @Provides
     @Singleton

@@ -12,7 +12,4 @@ interface GlobalApi {
         @Path("id") id: String
     ): Response<TopGlobalResponse>
 
-    companion object {
-        const val BASE_URL = "https://api.spotify.com/"
-    }
 }

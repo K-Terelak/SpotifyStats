@@ -12,9 +12,7 @@ import kt.mobile.spotify_stats.feature_home.domain.use_case.GetCurrentlyPlayingU
 import kt.mobile.spotify_stats.feature_home.domain.use_case.GetMyProfileUseCase
 import kt.mobile.spotify_stats.feature_home.domain.use_case.GetRecentlyPlayedUseCase
 import kt.mobile.spotify_stats.feature_home.domain.use_case.HomeUseCases
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -22,18 +20,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HomeModule {
 
-    @Provides
+
     @Singleton
+    @Provides
     fun provideHomeApi(
-        @Named("token") client: OkHttpClient,
-    ): HomeApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(HomeApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(HomeApi::class.java)
-    }
+        @Named("retrofitToken") retrofit: Retrofit
+    ): HomeApi = retrofit.create(HomeApi::class.java)
+
 
     @Provides
     @Singleton

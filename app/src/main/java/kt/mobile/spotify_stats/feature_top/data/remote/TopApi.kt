@@ -26,7 +26,4 @@ interface TopApi {
         @Query("ids") ids: String
     ): Response<TracksFeaturesResponse>
 
-    companion object {
-        const val BASE_URL = "https://api.spotify.com/"
-    }
 }

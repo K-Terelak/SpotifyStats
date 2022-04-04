@@ -49,10 +49,8 @@ fun Login(
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
         onResult = {
-            Log.e("IT", it.resultCode.toString())
             if (it.resultCode == Activity.RESULT_OK) {
                 val response = AuthorizationClient.getResponse(it.resultCode, it.data)
-                Log.e("Code: ", it.resultCode.toString())
                 authViewModel.getToken(code = response.code ?: "")
             }
         }
@@ -116,7 +114,7 @@ fun Login(
                     contentColor = Color.Black
                 ),
                 onClick = {
-                    Log.e("Clientid", clientId.toString())
+                    Log.d("ClientId", clientId.toString())
                     val builder: AuthorizationRequest.Builder =
                         AuthorizationRequest.Builder(
                             clientId.toString(),

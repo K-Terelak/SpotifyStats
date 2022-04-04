@@ -10,9 +10,7 @@ import kt.mobile.spotify_stats.feature_search.domain.repository.SearchRepository
 import kt.mobile.spotify_stats.feature_search.domain.use_case.GetSearchArtistsUseCase
 import kt.mobile.spotify_stats.feature_search.domain.use_case.GetSearchTracksUseCase
 import kt.mobile.spotify_stats.feature_search.domain.use_case.SearchUseCases
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -21,18 +19,10 @@ import javax.inject.Singleton
 object SearchModule {
 
 
-    @Provides
     @Singleton
-    fun provideSearchApi(
-        @Named("token") client: OkHttpClient,
-    ): SearchApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(SearchApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(SearchApi::class.java)
-    }
+    @Provides
+    fun provideSearchApi(@Named("retrofitToken")retrofit: Retrofit): SearchApi = retrofit.create(SearchApi::class.java)
+
 
     @Provides
     @Singleton

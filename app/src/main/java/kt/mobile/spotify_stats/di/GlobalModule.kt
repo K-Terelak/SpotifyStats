@@ -9,9 +9,7 @@ import kt.mobile.spotify_stats.feature_global.data.repository.GlobalRepositoryIm
 import kt.mobile.spotify_stats.feature_global.domain.repository.GlobalRepository
 import kt.mobile.spotify_stats.feature_global.domain.use_case.GetTopGlobalUseCase
 import kt.mobile.spotify_stats.feature_global.domain.use_case.GlobalUseCases
-import okhttp3.OkHttpClient
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -19,18 +17,13 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object GlobalModule {
 
-    @Provides
+
     @Singleton
+    @Provides
     fun provideGlobalApi(
-        @Named("token") client: OkHttpClient,
-    ): GlobalApi {
-        return Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(GlobalApi.BASE_URL)
-            .client(client)
-            .build()
-            .create(GlobalApi::class.java)
-    }
+        @Named("retrofitToken") retrofit: Retrofit
+    ): GlobalApi = retrofit.create(GlobalApi::class.java)
+
 
     @Provides
     @Singleton

@@ -22,7 +22,4 @@ interface SearchApi {
         @Query("limit") limit: Int = 6
     ): Response<SearchTracksResponse>
 
-    companion object {
-        const val BASE_URL = "https://api.spotify.com/"
-    }
 }

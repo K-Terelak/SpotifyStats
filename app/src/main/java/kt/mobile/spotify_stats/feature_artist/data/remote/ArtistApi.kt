@@ -28,8 +28,4 @@ interface ArtistApi {
         @Path("id") id: String,
     ): Response<RelatedArtistsResponse>
 
-    companion object {
-        const val BASE_URL = "https://api.spotify.com/"
-    }
-
 }
