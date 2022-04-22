@@ -41,13 +41,16 @@ class TrackViewModel @Inject constructor(
                     Log.d("getTrack", "SUCCESS ${result.data?.name}")
                     _trackState.value = trackState.value.copy(
                         track = result.data,
-                        isTrackLoading = false
+                        isTrackLoading = false,
+                        trackError = null
                     )
-
                 }
                 is Resource.Error -> {
-                    Log.e("getTrack", "ERROR ${result.error}")
-                    _trackState.value = trackState.value.copy(isTrackLoading = false)
+                    Log.e("getTrack", "ERROR")
+                    _trackState.value = trackState.value.copy(
+                        isTrackLoading = false,
+                        trackError = result.error
+                    )
 
                 }
             }
@@ -64,12 +67,16 @@ class TrackViewModel @Inject constructor(
                     Log.d("getTrackFeatures", "SUCCESS")
                     _trackState.value = trackState.value.copy(
                         trackFeatures = result.data,
-                        isTrackFeaturesLoading = false
+                        isTrackFeaturesLoading = false,
+                        trackFeaturesError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getTrackFeatures", "ERROR ${result.error}")
-                    _trackState.value = trackState.value.copy(isTrackFeaturesLoading = false)
+                    Log.e("getTrackFeatures", "ERROR")
+                    _trackState.value = trackState.value.copy(
+                        isTrackFeaturesLoading = false,
+                        trackFeaturesError = result.error
+                    )
                 }
             }
         }

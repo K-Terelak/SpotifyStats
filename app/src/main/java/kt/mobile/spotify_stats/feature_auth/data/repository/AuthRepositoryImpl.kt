@@ -2,6 +2,7 @@ package kt.mobile.spotify_stats.feature_auth.data.repository
 
 import android.content.SharedPreferences
 import android.util.Log
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.core.data.SimpleResource
 import kt.mobile.spotify_stats.core.util.Constants.KEY_BEARER_TOKEN
@@ -33,18 +34,13 @@ class AuthRepositoryImpl(
                 Resource.Success(Unit)
             } else {
                 Log.e("getAuthToken", "${response.errorBody()}")
-                Resource.Error(error = "Couldn't get token")
+                Resource.Error(error = R.string.couldnt_get_token)
             }
         } catch (e: IOException) {
-            Log.e("getAuthToken", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getAuthToken", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 
@@ -53,7 +49,7 @@ class AuthRepositoryImpl(
 
             val refreshToken = sharedPreferences.getString(KEY_REFRESH_BEARER_TOKEN, "")
             if (refreshToken.isNullOrEmpty()) {
-                return Resource.Error(error = "Not logged in")
+                return Resource.Error(error = R.string.not_logged_in)
             }
 
             val response = api.getRefreshAuthToken(refresh_token = refreshToken)
@@ -67,18 +63,13 @@ class AuthRepositoryImpl(
                 Resource.Success(Unit)
             } else {
                 Log.e("getRefreshAuthToken", "${response.errorBody()}")
-                Resource.Error(error = "Couldn't refresh token")
+                Resource.Error(error = R.string.couldnt_refresh_token)
             }
         } catch (e: IOException) {
-            Log.e("getRefreshAuthToken", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getRefreshAuthToken", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error =  R.string.couldnt_load)
         }
     }
 
@@ -92,8 +83,7 @@ class AuthRepositoryImpl(
 
             Resource.Success(Unit)
         } catch (e: IOException) {
-            Log.e("logout", "IOException $e")
-            Resource.Error(error = "Could\'t logout")
+            Resource.Error(error = R.string.couldnt_logout)
         }
     }
 }

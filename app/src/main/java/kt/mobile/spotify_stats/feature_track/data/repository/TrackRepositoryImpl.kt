@@ -1,6 +1,6 @@
 package kt.mobile.spotify_stats.feature_track.data.repository
 
-import android.util.Log
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.feature_top.domain.models.TracksFeatures
 import kt.mobile.spotify_stats.feature_track.data.remote.TrackApi
@@ -21,20 +21,15 @@ class TrackRepositoryImpl(
             if (response.isSuccessful) {
                 Resource.Success(data = response.body()?.toTrack())
             } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
-                } ?: Resource.Error(error = "Unknown Error")
+                response.errorBody()?.let {
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("getTrack", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getTrack", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error =  R.string.couldnt_load)
         }
     }
 
@@ -47,19 +42,14 @@ class TrackRepositoryImpl(
                 Resource.Success(data = response.body()?.toTracksFeatures())
             } else {
                 response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
-                } ?: Resource.Error(error = "Unknown Error")
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("getTrackFeatures", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error =R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getTrackFeatures", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 }

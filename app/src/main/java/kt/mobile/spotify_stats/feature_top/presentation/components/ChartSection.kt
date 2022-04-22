@@ -31,7 +31,7 @@ import kt.mobile.spotify_stats.nav.Screen
 fun ChartSection(
     isTopArtistsLoading: Boolean,
     artists: TopArtists?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit
 ) {
 
@@ -56,7 +56,7 @@ fun ChartSection(
 @Composable
 fun ChartDetailsSection(
     artistsList: List<GenreItem>?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit
 ) {
     if (!artistsList.isNullOrEmpty() && artistsList.size >= 6) {
@@ -97,7 +97,10 @@ fun ChartDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = topArtistsError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = topArtistsError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 

@@ -27,7 +27,7 @@ fun AuthScreen(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.uiText
+                        message = context.resources.getString(event.text)
                     )
                 }
             }

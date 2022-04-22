@@ -5,5 +5,5 @@ import kt.mobile.spotify_stats.feature_global.data.remote.response.get_top_globa
 data class GlobalState(
     val tracks: List<Item>? = emptyList(),
     val isTracksLoading: Boolean = false,
-    val isTracksError: String = ""
+    val isTracksError: Int? = null
 )

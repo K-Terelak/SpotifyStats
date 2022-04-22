@@ -20,7 +20,7 @@ import kt.mobile.spotify_stats.feature_top.domain.models.FeatureItem
 fun TrackFeaturesSection(
     trackFeature: List<FeatureItem>?,
     isTrackFeaturesLoading: Boolean,
-    trackFeaturesError: String,
+    trackFeaturesError: Int?,
 ) {
 
     Column(
@@ -43,7 +43,7 @@ fun TrackFeaturesSection(
 @Composable
 fun TrackFeaturesDetailsSection(
     trackFeature: List<FeatureItem>?,
-    trackFeaturesError: String,
+    trackFeaturesError: Int?,
 ) {
 
     if (trackFeature != null) {
@@ -63,7 +63,10 @@ fun TrackFeaturesDetailsSection(
     } else {
 
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = trackFeaturesError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = trackFeaturesError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

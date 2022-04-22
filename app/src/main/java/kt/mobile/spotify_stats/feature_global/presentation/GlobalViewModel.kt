@@ -39,10 +39,10 @@ class GlobalViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getArtistTopTracks", "ERROR ${result.error}")
+                    Log.e("getArtistTopTracks", "ERROR")
                     _globalState.value = globalState.value.copy(
                         isTracksLoading = false,
-                        isTracksError = result.error ?: "Unknown error"
+                        isTracksError = result.error
                     )
                 }
             }

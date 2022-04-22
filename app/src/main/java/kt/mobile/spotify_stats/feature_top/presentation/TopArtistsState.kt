@@ -5,5 +5,5 @@ import kt.mobile.spotify_stats.core.domain.models.TopArtists
 data class TopArtistsState(
     val isTopArtistsLoading: Boolean = false,
     val topArtistsList: TopArtists? = null,
-    val topArtistsError: String = "",
+    val topArtistsError: Int? = null,
 )

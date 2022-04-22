@@ -12,10 +12,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.presentation.components.CenteredCircularProgress
 import kt.mobile.spotify_stats.core.presentation.components.TopItem
 import kt.mobile.spotify_stats.core.presentation.ui.theme.*
@@ -28,7 +30,7 @@ import kt.mobile.spotify_stats.feature_artist.data.remote.response.get_related.A
 fun RelatedArtistsSection(
     relatedArtists: List<Artist>?,
     isRelatedArtistsLoading: Boolean,
-    relatedArtistsError: String,
+    relatedArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -72,7 +74,7 @@ fun RelatedArtistsSection(
 @Composable
 fun RelatedArtistsDetailsSection(
     relatedArtists: List<Artist>?,
-    relatedArtistsError: String,
+    relatedArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -100,7 +102,7 @@ fun RelatedArtistsDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = relatedArtistsError, fontSize = 12.sp)
+            Text(text = stringResource(id = relatedArtistsError?: R.string.unknown_error), fontSize = 12.sp)
         }
     }
 }

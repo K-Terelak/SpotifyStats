@@ -8,6 +8,6 @@ data class TopTracksState(
     val isTopTracksLoading: Boolean = false,
     val topTracksFeatures: TracksFeatures? = null,
     val topTracksList: TopTracks? = null,
-    val topTracksError: String = "",
-    val topTracksFeaturesError: String = "",
+    val topTracksError: Int? = null,
+    val topTracksFeaturesError: Int? = null,
 )

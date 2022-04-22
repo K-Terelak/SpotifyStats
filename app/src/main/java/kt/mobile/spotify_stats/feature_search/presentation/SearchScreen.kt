@@ -10,10 +10,12 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.presentation.components.CenteredCircularProgress
 import kt.mobile.spotify_stats.feature_search.presentation.composables.SearchItem
 import kt.mobile.spotify_stats.feature_search.presentation.composables.SearchTopBar
@@ -43,7 +45,11 @@ fun SearchScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Text(
-                            text = if (searchViewModel.searchState.value.query.isNotBlank()) searchViewModel.searchState.value.itemsError else "Search something!",
+                            text = if (searchViewModel.searchState.value.query.isNotBlank()) stringResource(
+                                searchViewModel.searchState.value.itemsError
+                                    ?: R.string.unknown_error
+                            )
+                            else "Search something!",
                             fontSize = 12.sp
                         )
                     }

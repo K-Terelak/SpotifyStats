@@ -30,7 +30,7 @@ import kt.mobile.spotify_stats.feature_artist.data.remote.response.Track
 fun TopTracksSection(
     isTopTracksLoading: Boolean,
     tracks: List<Track>?,
-    topTracksError: String,
+    topTracksError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -78,7 +78,7 @@ fun TopTracksSection(
 @Composable
 fun TopTracksDetailsSection(
     tracks: List<Track>?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -105,7 +105,10 @@ fun TopTracksDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = topArtistsError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = topArtistsError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

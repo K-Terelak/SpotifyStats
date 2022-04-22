@@ -33,7 +33,7 @@ fun TopArtistsSection(
     topItemType: ItemType = ItemType.Artist,
     isTopArtistsLoading: Boolean,
     topArtists: TopItems?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -72,7 +72,7 @@ fun TopArtistsSection(
 fun TopArtistsDetailsSection(
     topItemType: ItemType,
     items: List<TopItem>?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -100,7 +100,10 @@ fun TopArtistsDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = topArtistsError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = topArtistsError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

@@ -37,7 +37,7 @@ import kt.mobile.spotify_stats.feature_home.domain.models.MyProfile
 fun ProfileSection(
     isMyProfileLoading: Boolean,
     profile: MyProfile?,
-    profileError: String,
+    profileError: Int?,
     onLogoutClick: () -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -99,7 +99,7 @@ fun ProfileSection(
 @Composable
 fun ProfileDetailsSection(
     profile: MyProfile?,
-    proleError: String,
+    proleError: Int?,
     imageLoader: ImageLoader
 ) {
 
@@ -133,7 +133,10 @@ fun ProfileDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
-            Text(text = proleError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = proleError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

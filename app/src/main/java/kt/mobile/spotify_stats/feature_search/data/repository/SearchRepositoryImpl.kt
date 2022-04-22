@@ -1,6 +1,6 @@
 package kt.mobile.spotify_stats.feature_search.data.repository
 
-import android.util.Log
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.feature_search.data.remote.SearchApi
 import kt.mobile.spotify_stats.feature_search.domain.models.MySearchItems
@@ -21,17 +21,14 @@ class SearchRepositoryImpl(
                 Resource.Success(data = response.body()?.toMySearchItems())
             } else {
                 response.errorBody()?.let {
-                    Resource.Error(error = "Couldn't load:")
-                } ?: Resource.Error(error = "Unknown Error")
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("searchArtists", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("searchArtists", "HttpException ${e.message()}")
-            Resource.Error(error = "Couldn\'t load")
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 
@@ -44,17 +41,15 @@ class SearchRepositoryImpl(
                 Resource.Success(data = response.body()?.toMySearchItems())
             } else {
                 response.errorBody()?.let {
-                    Resource.Error(error = "Couldn't load")
-                } ?: Resource.Error(error = "Unknown Error")
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("searchTracks", "IOException $e")
             Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
+                error = R.string.couldnt_reach_server
             )
         } catch (e: HttpException) {
-            Log.e("searchTracks", "HttpException ${e.message()}")
-            Resource.Error(error = "Couldn't load")
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 }

@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.launch
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.core.util.UiEvent
 import kt.mobile.spotify_stats.feature_auth.domain.use_case.AuthUseCases
@@ -41,7 +42,11 @@ class AuthViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     Log.e("getToken", "Resource.Error ${result.error}")
-                    _eventFlow.emit(UiEvent.ShowSnackbar(uiText = result.error.toString()))
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackbar(
+                            text = result.error ?: R.string.unknown_error
+                        )
+                    )
                 }
             }
         }
@@ -61,7 +66,7 @@ class AuthViewModel @Inject constructor(
                 }
                 is Resource.Error -> {
                     Log.e("renewToken", "Error: ${result.error}")
-                    if (result.error == "Oops! Couldn\'t reach server. Check your internet connection") {
+                    if (result.error == R.string.couldnt_reach_server) {
                         _auth.value = authState.value.copy(
                             startDestination = Screen.AuthScreen,
                             isLoading = false,
@@ -74,7 +79,11 @@ class AuthViewModel @Inject constructor(
                             isRefresh = false
                         )
                     }
-                    _eventFlow.emit(UiEvent.ShowSnackbar(uiText = result.error.toString()))
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackbar(
+                            text = result.error ?: R.string.unknown_error
+                        )
+                    )
                 }
             }
         }
@@ -85,7 +94,11 @@ class AuthViewModel @Inject constructor(
             when (val result = authUseCases.logout()) {
                 is Resource.Success -> {
                     Log.d("logout", "SUCCESS")
-                    _eventFlow.emit(UiEvent.ShowSnackbar("Successfully logged out"))
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackbar(
+                            text = R.string.successfully_logged_out
+                        )
+                    )
                     _auth.value = authState.value.copy(
                         isLogged = false,
                         isRefresh = false
@@ -94,8 +107,12 @@ class AuthViewModel @Inject constructor(
                     context?.finish()
                 }
                 is Resource.Error -> {
-                    Log.e("logout", "ERROR ${result.error}")
-                    _eventFlow.emit(UiEvent.ShowSnackbar(result.error ?: "Unknown error"))
+                    Log.e("logout", "ERROR")
+                    _eventFlow.emit(
+                        UiEvent.ShowSnackbar(
+                            text = result.error ?: R.string.unknown_error
+                        )
+                    )
                 }
             }
         }

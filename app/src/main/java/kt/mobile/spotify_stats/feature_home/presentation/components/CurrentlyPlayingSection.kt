@@ -30,13 +30,13 @@ import kt.mobile.spotify_stats.core.presentation.ui.theme.SpaceSmall
 fun CurrentlyPlayingSection(
     isCurrentlyPlayingLoading: Boolean,
     currentlyPlayingTrack: Track?,
-    currentlyPlayingError: String,
+    currentlyPlayingError: Int?,
     imageLoader: ImageLoader
 ) {
 
     Text(
         modifier = Modifier.padding(start = SpaceSmall, top = SpaceSmall),
-        text = if (currentlyPlayingError.isNotEmpty()) {
+        text = if (currentlyPlayingError != null) {
             stringResource(R.string.last_played_on_spotify)
         } else {
             stringResource(R.string.currently_playing)
@@ -68,7 +68,7 @@ fun CurrentlyPlayingSection(
 @Composable
 fun CurrentlyPlayingDetailsSection(
     currentlyPlayingTrack: Track?,
-    currentlyPlayingError: String,
+    currentlyPlayingError: Int?,
     imageLoader: ImageLoader
 ) {
 
@@ -117,7 +117,10 @@ fun CurrentlyPlayingDetailsSection(
             }
         } else {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
-                Text(text = currentlyPlayingError, fontSize = 12.sp)
+                Text(
+                    text = stringResource(id = currentlyPlayingError ?: R.string.unknown_error),
+                    fontSize = 12.sp
+                )
             }
         }
     }

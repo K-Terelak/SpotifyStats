@@ -75,15 +75,15 @@ class TopViewModel @Inject constructor(
                     length.value = length.value.copy(
                         topArtistsList = result.data,
                         isTopArtistsLoading = false,
-                        topArtistsError = ""
+                        topArtistsError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getTopArtists", "ERROR ${result.error}")
+                    Log.e("getTopArtists", "ERROR")
                     length.value = length.value.copy(
                         topArtistsList = null,
                         isTopArtistsLoading = false,
-                        topArtistsError = result.error ?: "Unknown error"
+                        topArtistsError = result.error
                     )
                 }
             }
@@ -102,7 +102,7 @@ class TopViewModel @Inject constructor(
                     topTracksState.value = topTracksState.value.copy(
                         topTracksList = result.data,
                         isTopTracksLoading = false,
-                        topTracksError = ""
+                        topTracksError = null
                     )
 
                     result.data?.tracks?.forEach {
@@ -114,11 +114,11 @@ class TopViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getTopTracks", "ERROR ${result.error}")
+                    Log.e("getTopTracks", "ERROR")
                     topTracksState.value = topTracksState.value.copy(
                         topTracksList = null,
                         isTopTracksLoading = false,
-                        topTracksError = result.error ?: "Unknown error"
+                        topTracksError = result.error
                     )
                 }
             }
@@ -137,15 +137,15 @@ class TopViewModel @Inject constructor(
                     topTracksState.value = topTracksState.value.copy(
                         topTracksFeatures = result.data,
                         isTracksFeaturesLoading = false,
-                        topTracksFeaturesError = ""
+                        topTracksFeaturesError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getTracksFeatures", "ERROR ${result.error}")
+                    Log.e("getTracksFeatures", "ERROR")
                     topTracksState.value = topTracksState.value.copy(
                         topTracksFeatures = null,
                         isTracksFeaturesLoading = false,
-                        topTracksFeaturesError = result.error ?: "Unknown error"
+                        topTracksFeaturesError = result.error
                     )
                 }
             }

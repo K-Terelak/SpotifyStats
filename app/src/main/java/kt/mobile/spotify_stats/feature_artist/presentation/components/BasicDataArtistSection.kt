@@ -32,7 +32,7 @@ import java.text.NumberFormat
 fun BasicDataArtistSection(
     artist: ArtistItem?,
     isArtistsLoading: Boolean,
-    artistsError: String,
+    artistsError: Int?,
 ) {
 
     Box(
@@ -55,7 +55,7 @@ fun BasicDataArtistSection(
 @Composable
 fun BasicDataArtistsDetailsSection(
     artist: ArtistItem?,
-    artistsError: String,
+    artistsError: Int?,
 ) {
 
     if (artist != null) {
@@ -73,7 +73,10 @@ fun BasicDataArtistsDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = artistsError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = artistsError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

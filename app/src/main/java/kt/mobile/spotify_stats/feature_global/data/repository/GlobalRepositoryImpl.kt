@@ -1,6 +1,6 @@
 package kt.mobile.spotify_stats.feature_global.data.repository
 
-import android.util.Log
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.feature_global.data.remote.GlobalApi
 import kt.mobile.spotify_stats.feature_global.data.remote.response.get_top_global.TopGlobalResponse
@@ -21,17 +21,14 @@ class GlobalRepositoryImpl(
                 Resource.Success(data = response.body())
             } else {
                 response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
-                } ?: Resource.Error(error = "Unknown Error")
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("getTopGlobal", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error =R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getTopGlobal", "HttpException ${e.message()}")
-                Resource.Error(error = "Couldn't load")
+                Resource.Error(error = R.string.couldnt_load)
         }
     }
 }

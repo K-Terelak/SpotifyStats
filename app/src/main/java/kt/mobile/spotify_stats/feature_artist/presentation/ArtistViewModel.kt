@@ -41,12 +41,16 @@ class ArtistViewModel @Inject constructor(
                     Log.d("getArtist", "SUCCESS ${result.data?.name}")
                     _artistState.value = artistState.value.copy(
                         artist = result.data,
-                        isArtistLoading = false
+                        isArtistLoading = false,
+                        artistError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getArtist", "ERROR ${result.error}")
-                    _artistState.value = artistState.value.copy(isArtistLoading = false)
+                    Log.e("getArtist", "ERROR")
+                    _artistState.value = artistState.value.copy(
+                        isArtistLoading = false,
+                        artistError = result.error
+                    )
 
                 }
             }
@@ -63,12 +67,16 @@ class ArtistViewModel @Inject constructor(
                     Log.d("getArtistTopTracks", "SUCCESS ${result.data?.tracks?.size}")
                     _artistState.value = artistState.value.copy(
                         artistsTopTracks = result.data,
-                        isArtistsTopTracksLoading = false
+                        isArtistsTopTracksLoading = false,
+                        artistsTopTracksError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getArtistTopTracks", "ERROR ${result.error}")
-                    _artistState.value = artistState.value.copy(isArtistsTopTracksLoading = false)
+                    Log.e("getArtistTopTracks", "ERROR")
+                    _artistState.value = artistState.value.copy(
+                        isArtistsTopTracksLoading = false,
+                        artistsTopTracksError = result.error
+                    )
 
                 }
             }
@@ -85,14 +93,15 @@ class ArtistViewModel @Inject constructor(
                     Log.d("getRelatedArtists", "SUCCESS ${result.data?.artists?.size}")
                     _artistState.value = artistState.value.copy(
                         relatedArtists = result.data,
-                        isRelatedArtistsLoading = false
+                        isRelatedArtistsLoading = false,
+                        relatedArtistsError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getRelatedArtists", "ERROR ${result.error}")
+                    Log.e("getRelatedArtists", "ERROR")
                     _artistState.value = artistState.value.copy(
                         isRelatedArtistsLoading = false,
-                        relatedArtistsError = result.error.orEmpty()
+                        relatedArtistsError = result.error
                     )
 
                 }

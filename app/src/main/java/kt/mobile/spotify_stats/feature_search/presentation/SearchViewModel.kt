@@ -53,7 +53,7 @@ class SearchViewModel @Inject constructor(
 
             _searchState.value = searchState.value.copy(
                 isItemsLoading = true,
-                itemsError = ""
+                itemsError = null
             )
 
             val searchItems: MutableList<MySearchItem> = mutableListOf()
@@ -63,13 +63,13 @@ class SearchViewModel @Inject constructor(
                     Log.d("searchArtists", "SUCCESS")
                     result.data?.searchItems?.let { searchItems.addAll(it) }
                     _searchState.value = searchState.value.copy(
-                        itemsError = ""
+                        itemsError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("searchArtists", "ERROR ${result.error}")
+                    Log.e("searchArtists", "ERROR")
                     _searchState.value = searchState.value.copy(
-                        itemsError = result.error ?: "Unknown error"
+                        itemsError = result.error
                     )
                 }
             }
@@ -79,14 +79,14 @@ class SearchViewModel @Inject constructor(
                     Log.d("searchTracks", "SUCCESS")
                     result.data?.searchItems?.let { searchItems.addAll(it) }
                     _searchState.value = searchState.value.copy(
-                        itemsError = ""
+                        itemsError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("searchTracks", "ERROR ${result.error}")
+                    Log.e("searchTracks", "ERROR")
                     _searchState.value =
                         searchState.value.copy(
-                            itemsError = result.error ?: "Unknown error"
+                            itemsError = result.error
                         )
                 }
             }

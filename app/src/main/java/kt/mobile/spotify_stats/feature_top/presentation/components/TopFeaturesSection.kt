@@ -25,7 +25,7 @@ import kt.mobile.spotify_stats.feature_top.domain.models.TracksFeatures
 fun TopFeaturesSection(
     isTopFeaturesLoading: Boolean,
     tracksFeatures: TracksFeatures?,
-    topFeaturesError: String,
+    topFeaturesError: Int?,
 ) {
 
     Text(
@@ -47,7 +47,7 @@ fun TopFeaturesSection(
 @Composable
 fun TopFeaturesDetailsSection(
     features: List<FeatureItem>?,
-    topFeaturesError: String,
+    topFeaturesError: Int?,
 ) {
 
     if (!features.isNullOrEmpty()) {
@@ -68,7 +68,10 @@ fun TopFeaturesDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = topFeaturesError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = topFeaturesError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 

@@ -13,9 +13,11 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.presentation.components.CenteredCircularProgress
 import kt.mobile.spotify_stats.core.presentation.components.TopItem
 import kt.mobile.spotify_stats.core.util.ItemType
@@ -30,7 +32,7 @@ fun TabScreenTopItems(
     topItemType: ItemType,
     topItems: TopItems?,
     isLoading: Boolean,
-    topItemsError: String,
+    topItemsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -55,7 +57,7 @@ fun TabScreenTopItems(
 fun TabScreenDetailsSection(
     topItemType: ItemType,
     items: List<TopItem>?,
-    topArtistsError: String,
+    topArtistsError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -82,7 +84,10 @@ fun TabScreenDetailsSection(
         }
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = topArtistsError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = topArtistsError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

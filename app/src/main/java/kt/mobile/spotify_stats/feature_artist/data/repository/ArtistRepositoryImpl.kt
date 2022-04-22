@@ -1,7 +1,7 @@
 package kt.mobile.spotify_stats.feature_artist.data.repository
 
 import android.content.SharedPreferences
-import android.util.Log
+import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.core.data.dto.response.get_top_item.ArtistItem
 import kt.mobile.spotify_stats.feature_artist.data.remote.ArtistApi
@@ -23,22 +23,19 @@ class ArtistRepositoryImpl(
             val response = api.getArtist(id = id)
 
             if (response.isSuccessful) {
-                Resource.Success(data = response.body())
+                response.body()?.let {
+                    Resource.Success(data = response.body())
+                } ?: Resource.Error(R.string.empty)
             } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
-                } ?: Resource.Error(error = "Unknown Error")
+                response.errorBody()?.let {
+                    Resource.Error(error = R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("getArtist", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getArtist", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 
@@ -47,28 +44,25 @@ class ArtistRepositoryImpl(
 
             val market = sharedPreferences.getString("country", "") ?: ""
             if (market.isEmpty()) {
-                return Resource.Error(error = "No country code")
+                return Resource.Error(error = R.string.no_country_code)
             } else {
                 val response = api.getArtistTopTracks(id = id, market = market)
 
                 if (response.isSuccessful) {
-                    Resource.Success(data = response.body())
+                    response.body()?.let {
+                        Resource.Success(data = response.body())
+                    } ?: Resource.Error(R.string.empty)
                 } else {
-                    response.errorBody()?.let { error ->
-                        Resource.Error(error = "Couldn't load: $error")
-                    } ?: Resource.Error(error = "Unknown Error")
+                    response.errorBody()?.let {
+                        Resource.Error(error = R.string.couldnt_load)
+                    } ?: Resource.Error(error = R.string.unknown_error)
                 }
             }
         } catch (e: IOException) {
-            Log.e("getArtistsTopTracks", "IOException $e")
-            Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
-            )
+            Resource.Error(error = R.string.couldnt_reach_server)
+
         } catch (e: HttpException) {
-            Log.e("getArtistsTopTracks", "HttpException ${e.message()}")
-            Resource.Error(
-                error = e.message.toString()
-            )
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 
@@ -77,21 +71,21 @@ class ArtistRepositoryImpl(
             val response = api.getRelatedArtists(id = id)
 
             if (response.isSuccessful) {
-                Resource.Success(data = response.body())
+                response.body()?.let {
+                    Resource.Success(data = response.body())
+                } ?: Resource.Error(R.string.empty)
             } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = "Couldn't load: $error")
-                } ?: Resource.Error(error = "Unknown Error")
+                response.errorBody()?.let {
+                    Resource.Error(R.string.couldnt_load)
+                } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Log.e("getRelatedArtists", "IOException $e")
             Resource.Error(
-                error = "Oops! Couldn\'t reach server. Check your internet connection"
+                error = R.string.couldnt_reach_server
             )
         } catch (e: HttpException) {
-            Log.e("getRelatedArtists", "HttpException ${e.message()}")
             Resource.Error(
-                error = e.message.toString()
+                error = R.string.couldnt_load
             )
         }
     }

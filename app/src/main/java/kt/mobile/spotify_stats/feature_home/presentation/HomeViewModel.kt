@@ -47,14 +47,14 @@ class HomeViewModel @Inject constructor(
                     _homeState.value = homeState.value.copy(
                         myProfile = result.data,
                         isMyProfileLoading = false,
-                        profileError = ""
+                        profileError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getMyProfile", "ERROR ${result.error}")
+                    Log.e("getMyProfile", "ERROR")
                     _homeState.value = homeState.value.copy(
                         isMyProfileLoading = false,
-                        profileError = result.error ?: "Unknown error"
+                        profileError = result.error
                     )
                 }
             }
@@ -72,15 +72,15 @@ class HomeViewModel @Inject constructor(
                     _homeState.value = homeState.value.copy(
                         currentlyPlaying = result.data,
                         isCurrentlyPlayingLoading = false,
-                        currentlyPlayingError = ""
+                        currentlyPlayingError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getCurrentlyPlaying", "ERROR ${result.error}")
+                    Log.e("getCurrentlyPlaying", "ERROR")
                     _homeState.value = homeState.value.copy(
                         currentlyPlaying = null,
                         isCurrentlyPlayingLoading = false,
-                        currentlyPlayingError = result.error ?: "Unknown error"
+                        currentlyPlayingError = result.error
                     )
                 }
             }
@@ -98,14 +98,14 @@ class HomeViewModel @Inject constructor(
                     _homeState.value = homeState.value.copy(
                         recentlyPlayed = result.data,
                         isRecentlyPlayedLoading = false,
-                        recentlyPlayedError = ""
+                        recentlyPlayedError = null
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getRecentlyPlayed", "ERROR ${result.error}")
+                    Log.e("getRecentlyPlayed", "ERROR")
                     _homeState.value = homeState.value.copy(
                         isRecentlyPlayedLoading = false,
-                        recentlyPlayedError = result.error ?: "Unknown error"
+                        recentlyPlayedError = result.error
                     )
                 }
             }

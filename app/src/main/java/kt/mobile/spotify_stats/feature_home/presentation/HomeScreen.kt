@@ -65,7 +65,7 @@ fun HomeScreen(
             when (event) {
                 is UiEvent.ShowSnackbar -> {
                     scaffoldState.snackbarHostState.showSnackbar(
-                        message = event.uiText
+                        message = context.resources.getString(event.text)
                     )
                 }
             }
@@ -159,7 +159,9 @@ fun HomeScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = homeState.recentlyPlayedError,
+                                text = stringResource(
+                                    id = homeState.recentlyPlayedError ?: R.string.unknown_error
+                                ),
                                 fontSize = 12.sp,
                                 modifier = Modifier.padding(SpaceSmall)
                             )

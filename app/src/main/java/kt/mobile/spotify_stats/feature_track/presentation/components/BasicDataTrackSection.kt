@@ -35,7 +35,7 @@ import kt.mobile.spotify_stats.nav.Screen
 fun BasicDataTrackSection(
     track: MyTrack?,
     isTrackLoading: Boolean,
-    trackError: String,
+    trackError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -64,7 +64,7 @@ fun BasicDataTrackSection(
 @Composable
 fun BasicDataTrackDetailsSection(
     track: MyTrack?,
-    trackError: String,
+    trackError: Int?,
     onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
@@ -89,7 +89,10 @@ fun BasicDataTrackDetailsSection(
         )
     } else {
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = trackError, fontSize = 12.sp)
+            Text(
+                text = stringResource(id = trackError ?: R.string.unknown_error),
+                fontSize = 12.sp
+            )
         }
     }
 }

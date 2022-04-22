@@ -7,11 +7,13 @@ import kt.mobile.spotify_stats.feature_artist.data.remote.response.get_related.R
 data class ArtistState(
     val artist: ArtistItem? = null,
     val isArtistLoading: Boolean = false,
-    val artistError: String = "",
+    val artistError: Int? = null,
+
     val artistsTopTracks: ArtistsTopTracksResponse? = null,
     val isArtistsTopTracksLoading: Boolean = false,
-    val artistsTopTracksError: String = "",
+    val artistsTopTracksError: Int? = null,
+
     val relatedArtists: RelatedArtistsResponse? = null,
     val isRelatedArtistsLoading: Boolean = false,
-    val relatedArtistsError: String = ""
+    val relatedArtistsError: Int? = null
 )
