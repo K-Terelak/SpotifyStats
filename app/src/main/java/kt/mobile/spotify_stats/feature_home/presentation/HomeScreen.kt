@@ -119,7 +119,8 @@ fun HomeScreen(
                         homeState.recentlyPlayed?.listSongs?.firstOrNull()?.track
                     },
                     currentlyPlayingError = homeState.currentlyPlayingError,
-                    imageLoader = imageLoader
+                    onNavigate = onNavigate,
+                imageLoader = imageLoader
                 )
             }
 

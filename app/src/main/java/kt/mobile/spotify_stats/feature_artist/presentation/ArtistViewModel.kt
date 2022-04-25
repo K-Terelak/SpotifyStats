@@ -1,6 +1,5 @@
 package kt.mobile.spotify_stats.feature_artist.presentation
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
@@ -24,21 +23,19 @@ class ArtistViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>(ARTIST_ID)?.let { artistId ->
-            Log.d("ArtistId:", artistId)
             getArtist(artistId)
             getArtistTopTracks(artistId)
             getRelatedArtists(artistId)
         }
     }
 
-    private fun getArtist(artistId: String) {
+    fun getArtist(artistId: String) {
         viewModelScope.launch {
 
             _artistState.value = artistState.value.copy(isArtistLoading = true)
 
             when (val result = artistUseCases.getArtist(artistId)) {
                 is Resource.Success -> {
-                    Log.d("getArtist", "SUCCESS ${result.data?.name}")
                     _artistState.value = artistState.value.copy(
                         artist = result.data,
                         isArtistLoading = false,
@@ -46,8 +43,8 @@ class ArtistViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getArtist", "ERROR")
                     _artistState.value = artistState.value.copy(
+                        artist = null,
                         isArtistLoading = false,
                         artistError = result.error
                     )
@@ -64,7 +61,6 @@ class ArtistViewModel @Inject constructor(
 
             when (val result = artistUseCases.getArtistsTopTracks(artistId)) {
                 is Resource.Success -> {
-                    Log.d("getArtistTopTracks", "SUCCESS ${result.data?.tracks?.size}")
                     _artistState.value = artistState.value.copy(
                         artistsTopTracks = result.data,
                         isArtistsTopTracksLoading = false,
@@ -72,7 +68,6 @@ class ArtistViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getArtistTopTracks", "ERROR")
                     _artistState.value = artistState.value.copy(
                         isArtistsTopTracksLoading = false,
                         artistsTopTracksError = result.error
@@ -90,7 +85,6 @@ class ArtistViewModel @Inject constructor(
 
             when (val result = artistUseCases.getRelatedArtists(artistId)) {
                 is Resource.Success -> {
-                    Log.d("getRelatedArtists", "SUCCESS ${result.data?.artists?.size}")
                     _artistState.value = artistState.value.copy(
                         relatedArtists = result.data,
                         isRelatedArtistsLoading = false,
@@ -98,7 +92,6 @@ class ArtistViewModel @Inject constructor(
                     )
                 }
                 is Resource.Error -> {
-                    Log.e("getRelatedArtists", "ERROR")
                     _artistState.value = artistState.value.copy(
                         isRelatedArtistsLoading = false,
                         relatedArtistsError = result.error

@@ -24,6 +24,8 @@ import kt.mobile.spotify_stats.core.presentation.ui.theme.ProfilePictureSizeSmal
 import kt.mobile.spotify_stats.core.presentation.ui.theme.Shapes
 import kt.mobile.spotify_stats.core.presentation.ui.theme.SongImageSizeMedium
 import kt.mobile.spotify_stats.core.presentation.ui.theme.SpaceSmall
+import kt.mobile.spotify_stats.core.util.noRippleClickable
+import kt.mobile.spotify_stats.nav.Screen
 
 @ExperimentalCoilApi
 @Composable
@@ -31,6 +33,7 @@ fun CurrentlyPlayingSection(
     isCurrentlyPlayingLoading: Boolean,
     currentlyPlayingTrack: Track?,
     currentlyPlayingError: Int?,
+    onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
 
@@ -58,6 +61,7 @@ fun CurrentlyPlayingSection(
             CurrentlyPlayingDetailsSection(
                 currentlyPlayingTrack = currentlyPlayingTrack,
                 currentlyPlayingError = currentlyPlayingError,
+                onNavigate = onNavigate,
                 imageLoader = imageLoader
             )
         }
@@ -69,6 +73,7 @@ fun CurrentlyPlayingSection(
 fun CurrentlyPlayingDetailsSection(
     currentlyPlayingTrack: Track?,
     currentlyPlayingError: Int?,
+    onNavigate: (String) -> Unit,
     imageLoader: ImageLoader
 ) {
 
@@ -79,41 +84,46 @@ fun CurrentlyPlayingDetailsSection(
     ) {
 
         if (currentlyPlayingTrack != null) {
-            Image(
-                painter = rememberImagePainter(
-                    data = currentlyPlayingTrack.album.images.firstOrNull()?.url,
-                    imageLoader = imageLoader
-                ),
-                contentDescription = stringResource(R.string.song_image),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(SongImageSizeMedium)
-                    .clip(Shapes.small)
-                    .align(CenterVertically)
-            )
-
-            Column(
-                modifier = Modifier
-                    .fillMaxHeight()
-                    .padding(SpaceSmall),
-                verticalArrangement = Arrangement.Top,
-                horizontalAlignment = Alignment.Start
+            Row(
+                modifier = Modifier.noRippleClickable {
+                    onNavigate(Screen.TrackScreen.route + "/${currentlyPlayingTrack.id}")
+                }
             ) {
 
-                Text(
-                    text = currentlyPlayingTrack.name,
-                    fontSize = 16.sp
+                Image(
+                    painter = rememberImagePainter(
+                        data = currentlyPlayingTrack.album.images.firstOrNull()?.url,
+                        imageLoader = imageLoader
+                    ),
+                    contentDescription = stringResource(R.string.song_image),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(SongImageSizeMedium)
+                        .clip(Shapes.small)
+                        .align(CenterVertically)
                 )
-                var artists = ""
-                currentlyPlayingTrack.artists.forEach { artistX ->
-                    artists += artistX.name + ", "
+
+                Column(
+                    modifier = Modifier
+                        .fillMaxHeight()
+                        .padding(SpaceSmall),
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.Start
+                ) {
+
+                    Text(
+                        text = currentlyPlayingTrack.name,
+                        fontSize = 16.sp
+                    )
+                    var artists = ""
+                    currentlyPlayingTrack.artists.forEach { artistX ->
+                        artists += artistX.name + ", "
+                    }
+                    Text(
+                        text = artists.dropLast(2),
+                        fontSize = 10.sp
+                    )
                 }
-                Text(
-                    text = artists.dropLast(2),
-                    fontSize = 10.sp
-                )
-
-
             }
         } else {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Center) {
