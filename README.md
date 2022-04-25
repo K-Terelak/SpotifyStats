@@ -22,6 +22,10 @@
 - Search for artists and tracks
 - Top 50 tracks - worldwide
 - Info about artist/track
+- Related artists
+- 10 most popular tracks by the artist
+- Swipe to refresh
+- Open user profile in spotify app
 - Logout
 
 ## UI
