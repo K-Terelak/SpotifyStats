@@ -68,7 +68,7 @@ class ArtistViewModelTest : UnitTest() {
 
     @Test
     fun `savedStateHandle not null, init fun return Resource error`() = runTest {
-        val artistId = "id"
+        val artistId = anyString()
 
         every { savedStateHandle.get<String>(ARTIST_ID) } returns artistId
         coEvery { artistUseCases.getArtist(artistId) }.answers { Resource.Error(anyInt()) }
@@ -108,7 +108,7 @@ class ArtistViewModelTest : UnitTest() {
         )
         val dummyArtistsTopTracks = ArtistsTopTracksResponse(anyList())
         val dummyRelatedArtists = RelatedArtistsResponse(anyList())
-        val artistId = "id"
+        val artistId = anyString()
 
         every { savedStateHandle.get<String>(ARTIST_ID) } returns artistId
         coEvery { artistUseCases.getArtist(artistId) }.answers { Resource.Success(dummyArtistItem) }
@@ -119,15 +119,15 @@ class ArtistViewModelTest : UnitTest() {
         state = artistViewModel.artistState.value
 
         assertThat(state.isArtistLoading).isFalse()
-        assertThat(state.artist).isNotNull()
+        assertThat(state.artist).isEqualTo(dummyArtistItem)
         assertThat(state.artistError).isNull()
 
         assertThat(state.isArtistsTopTracksLoading).isFalse()
-        assertThat(state.artistsTopTracks).isNotNull()
+        assertThat(state.artistsTopTracks).isEqualTo(dummyArtistsTopTracks)
         assertThat(state.artistsTopTracksError).isNull()
 
         assertThat(state.isRelatedArtistsLoading).isFalse()
-        assertThat(state.relatedArtists).isNotNull()
+        assertThat(state.relatedArtists).isEqualTo(dummyRelatedArtists)
         assertThat(state.relatedArtistsError).isNull()
     }
 

@@ -12,6 +12,7 @@ import kt.mobile.spotify_stats.feature_artist.domain.repository.ArtistRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
+import org.mockito.ArgumentMatchers.anyString
 
 @ExperimentalCoroutinesApi
 class GetArtistsTopTracksUseCaseTest : UnitTest() {
@@ -25,7 +26,7 @@ class GetArtistsTopTracksUseCaseTest : UnitTest() {
 
     @Before
     fun setUp() {
-        artistId = "15UsOTVnJzReFVN1VCnxy4"
+        artistId = anyString()
         getArtistsTopTracksUseCase = GetArtistsTopTracksUseCase(artistRepository)
     }
 

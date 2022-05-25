@@ -23,9 +23,9 @@ class ArtistViewModel @Inject constructor(
 
     init {
         savedStateHandle.get<String>(ARTIST_ID)?.let { artistId ->
-            getArtist(artistId)
-            getArtistTopTracks(artistId)
-            getRelatedArtists(artistId)
+            getArtist(artistId = artistId)
+            getArtistTopTracks(artistId = artistId)
+            getRelatedArtists(artistId = artistId)
         }
     }
 

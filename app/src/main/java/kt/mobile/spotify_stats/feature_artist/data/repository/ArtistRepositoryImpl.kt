@@ -23,8 +23,8 @@ class ArtistRepositoryImpl(
             val response = api.getArtist(id = id)
 
             if (response.isSuccessful) {
-                response.body()?.let {
-                    Resource.Success(data = response.body())
+                response.body()?.let { body->
+                    Resource.Success(data = body)
                 } ?: Resource.Error(R.string.empty)
             } else {
                 response.errorBody()?.let {

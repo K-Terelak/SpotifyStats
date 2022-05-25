@@ -9,6 +9,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
@@ -22,6 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import kotlinx.coroutines.flow.collectLatest
 import kt.mobile.spotify_stats.R
@@ -73,6 +75,13 @@ fun HomeScreen(
     }
 
     SwipeRefresh(
+        indicator = { state, trigger ->
+            SwipeRefreshIndicator(
+                state = state, refreshTriggerDistance = trigger,
+                scale = true,
+                contentColor = MaterialTheme.colors.primary,
+            )
+        },
         state = swipeRefreshState,
         onRefresh = {
             homeViewModel.loadData()
@@ -120,7 +129,7 @@ fun HomeScreen(
                     },
                     currentlyPlayingError = homeState.currentlyPlayingError,
                     onNavigate = onNavigate,
-                imageLoader = imageLoader
+                    imageLoader = imageLoader
                 )
             }
 

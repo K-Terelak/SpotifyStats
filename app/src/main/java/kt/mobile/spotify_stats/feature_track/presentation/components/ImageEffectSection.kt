@@ -3,6 +3,7 @@ package kt.mobile.spotify_stats.feature_track.presentation.components
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.icons.Icons
@@ -10,9 +11,11 @@ import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberImagePainter
@@ -58,6 +61,11 @@ fun ImageEffectSection(
 
             IconButton(onClick = onNavigateUp) {
                 Icon(
+                    modifier = Modifier.shadow(
+                        elevation = 16.dp,
+                        shape = RoundedCornerShape(8.dp),
+                        clip = true
+                    ),
                     imageVector = Icons.Default.Close,
                     contentDescription = stringResource(R.string.navigate_back)
                 )

@@ -15,7 +15,6 @@ import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.data.Resource
 import kt.mobile.spotify_stats.core.util.UiEvent
 import kt.mobile.spotify_stats.feature_auth.domain.use_case.AuthUseCases
-import kt.mobile.spotify_stats.nav.Screen
 import javax.inject.Inject
 
 @HiltViewModel
@@ -58,7 +57,6 @@ class AuthViewModel @Inject constructor(
                 is Resource.Success -> {
                     Log.d("renewToken", "Success")
                     _auth.value = authState.value.copy(
-                        startDestination = Screen.HomeScreen,
                         isLogged = true,
                         isLoading = false,
                         isRefresh = false,
@@ -68,13 +66,11 @@ class AuthViewModel @Inject constructor(
                     Log.e("renewToken", "Error: ${result.error}")
                     if (result.error == R.string.couldnt_reach_server) {
                         _auth.value = authState.value.copy(
-                            startDestination = Screen.AuthScreen,
                             isLoading = false,
                             isRefresh = true
                         )
                     } else {
                         _auth.value = authState.value.copy(
-                            startDestination = Screen.AuthScreen,
                             isLoading = false,
                             isRefresh = false
                         )

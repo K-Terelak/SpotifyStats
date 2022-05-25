@@ -10,7 +10,7 @@ import retrofit2.HttpException
 import java.io.IOException
 
 class TrackRepositoryImpl(
-    private val api: TrackApi,
+    private val api: TrackApi
 ) : TrackRepository {
 
     override suspend fun getTrack(id: String): Resource<MyTrack> {
@@ -19,7 +19,9 @@ class TrackRepositoryImpl(
             val response = api.getTrack(id = id)
 
             if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toTrack())
+                response.body()?.let { body ->
+                    Resource.Success(data = body.toTrack())
+                } ?: Resource.Error(R.string.empty)
             } else {
                 response.errorBody()?.let {
                     Resource.Error(error = R.string.couldnt_load)
@@ -29,7 +31,7 @@ class TrackRepositoryImpl(
             Resource.Error(error = R.string.couldnt_reach_server)
 
         } catch (e: HttpException) {
-            Resource.Error(error =  R.string.couldnt_load)
+            Resource.Error(error = R.string.couldnt_load)
         }
     }
 
@@ -39,14 +41,16 @@ class TrackRepositoryImpl(
             val response = api.getTrackFeatures(ids = ids)
 
             if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toTracksFeatures())
+                response.body()?.let { body ->
+                    Resource.Success(data = body.toTracksFeatures())
+                } ?: Resource.Error(R.string.empty)
             } else {
-                response.errorBody()?.let { error ->
+                response.errorBody()?.let {
                     Resource.Error(error = R.string.couldnt_load)
                 } ?: Resource.Error(error = R.string.unknown_error)
             }
         } catch (e: IOException) {
-            Resource.Error(error =R.string.couldnt_reach_server)
+            Resource.Error(error = R.string.couldnt_reach_server)
 
         } catch (e: HttpException) {
             Resource.Error(error = R.string.couldnt_load)
