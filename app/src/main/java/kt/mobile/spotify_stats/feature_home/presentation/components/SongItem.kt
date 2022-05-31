@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
@@ -54,14 +55,18 @@ fun SongItem(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+
             Row(
                 horizontalArrangement = Arrangement.Start,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.weight(0.7f)
             ) {
+
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.Center
                 ) {
+
                     Icon(
                         imageVector = Icons.Default.Replay,
                         contentDescription = stringResource(R.string.replay_icon),
@@ -73,30 +78,43 @@ fun SongItem(
                 Spacer(modifier = Modifier.width(SpaceMedium))
 
                 Column(
+                    Modifier.weight(1f, fill = false),
                     horizontalAlignment = Alignment.Start,
                     verticalArrangement = Arrangement.Center
                 ) {
+
                     Text(
                         text = songTitle,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis,
                         fontSize = 14.sp,
                     )
                     Text(
                         text = artists,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
                         fontSize = 10.sp,
                     )
                 }
-            }
 
-            Image(
-                painter = rememberImagePainter(
-                    data = songImage,
-                    imageLoader = imageLoader
-                ), contentDescription = stringResource(R.string.song_image),
-                contentScale = ContentScale.Crop,
-                modifier = Modifier
-                    .size(SongImageSizeSmall)
-                    .clip(Shapes.small)
-            )
+            }
+            Row(
+                horizontalArrangement = Arrangement.End,
+                modifier = Modifier.weight(0.3f)
+            ) {
+
+                Image(
+                    painter = rememberImagePainter(
+                        data = songImage,
+                        imageLoader = imageLoader
+                    ), contentDescription = stringResource(R.string.song_image),
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(SongImageSizeSmall)
+                        .clip(Shapes.small)
+                )
+
+            }
         }
     }
 }

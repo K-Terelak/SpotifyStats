@@ -13,6 +13,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.sp
 import coil.ImageLoader
 import coil.annotation.ExperimentalCoilApi
@@ -113,15 +114,20 @@ fun CurrentlyPlayingDetailsSection(
 
                     Text(
                         text = currentlyPlayingTrack.name,
-                        fontSize = 16.sp
+                        maxLines = 2,
+                        fontSize = 16.sp,
+                        overflow = TextOverflow.Ellipsis
                     )
+
                     var artists = ""
                     currentlyPlayingTrack.artists.forEach { artistX ->
                         artists += artistX.name + ", "
                     }
                     Text(
                         text = artists.dropLast(2),
-                        fontSize = 10.sp
+                        fontSize = 10.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
                     )
                 }
             }
