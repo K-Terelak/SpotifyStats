@@ -13,6 +13,8 @@ object Constants {
     const val BASE_AUTH_URL = "https://accounts.spotify.com/"
     const val BASE_API_URL = "https://api.spotify.com/"
 
+    const val AUTHORIZATION_HEADER = "Authorization"
 
-
+    const val CROSS_FADE_DURATION = 1000
+    const val IMAGE_TWEEN_DURATION = 200
 }

@@ -2,9 +2,6 @@ package kt.mobile.spotify_stats.feature_auth.presentation.components
 
 import android.app.Activity
 import android.content.Context
-import android.content.pm.ApplicationInfo
-import android.content.pm.PackageManager
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -18,6 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -27,6 +25,7 @@ import androidx.compose.ui.unit.sp
 import com.spotify.sdk.android.auth.AuthorizationClient
 import com.spotify.sdk.android.auth.AuthorizationRequest
 import com.spotify.sdk.android.auth.AuthorizationResponse
+import kt.mobile.spotify_stats.BuildConfig
 import kt.mobile.spotify_stats.R
 import kt.mobile.spotify_stats.core.presentation.ui.theme.IconLarge
 import kt.mobile.spotify_stats.core.presentation.ui.theme.SpaceLarge
@@ -39,12 +38,8 @@ import kt.mobile.spotify_stats.feature_auth.util.Constants
 fun Login(
     context: Context,
     authViewModel: AuthViewModel,
+    apiScopes: Array<String> = stringArrayResource(id = R.array.api_scopes)
 ) {
-
-    val ai: ApplicationInfo = context.packageManager
-        .getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
-    val clientId = ai.metaData["client_id"]
-
 
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartActivityForResult(),
@@ -114,27 +109,15 @@ fun Login(
                     contentColor = Color.Black
                 ),
                 onClick = {
-                    Log.d("ClientId", clientId.toString())
                     val builder: AuthorizationRequest.Builder =
                         AuthorizationRequest.Builder(
-                            clientId.toString(),
+                            BuildConfig.CLIENT_ID,
                             AuthorizationResponse.Type.CODE,
                             Constants.REDIRECT_URL
-                        )
-
-                    builder.setScopes(
-                        arrayOf(
-                            "user-top-read",
-                            "user-read-currently-playing",
-                            "user-read-recently-played",
-                            "user-read-private"
-                        )
-                    )
+                        ).setScopes(apiScopes)
 
                     val request: AuthorizationRequest = builder.build()
-
-                    val intent =
-                        AuthorizationClient.createLoginActivityIntent(context as Activity, request)
+                    val intent = AuthorizationClient.createLoginActivityIntent(context as Activity, request)
                     launcher.launch(intent)
                 }
             ) {

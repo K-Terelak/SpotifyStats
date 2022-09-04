@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="api_scopes" translatable="false">
+        <item>user-top-read</item>
+        <item>user-read-currently-playing</item>
+        <item>user-read-recently-played</item>
+        <item>user-read-private</item>
+    </string-array>
+</resources>
