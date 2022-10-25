@@ -13,47 +13,43 @@ class TrackRepositoryImpl(
     private val api: TrackApi
 ) : TrackRepository {
 
-    override suspend fun getTrack(id: String): Resource<MyTrack> {
-        return try {
+    override suspend fun getTrack(id: String): Resource<MyTrack> = try {
 
-            val response = api.getTrack(id = id)
+        val response = api.getTrack(id = id)
 
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    Resource.Success(data = body.toTrack())
-                } ?: Resource.Error(R.string.empty)
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error = R.string.couldnt_load)
+        if (response.isSuccessful) {
+            response.body()?.let { body ->
+                Resource.Success(data = body.toTrack())
+            } ?: Resource.Error(R.string.empty)
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 
-    override suspend fun getTrackFeatures(ids: String): Resource<TracksFeatures> {
-        return try {
+    override suspend fun getTrackFeatures(ids: String): Resource<TracksFeatures> = try {
 
-            val response = api.getTrackFeatures(ids = ids)
+        val response = api.getTrackFeatures(ids = ids)
 
-            if (response.isSuccessful) {
-                response.body()?.let { body ->
-                    Resource.Success(data = body.toTracksFeatures())
-                } ?: Resource.Error(R.string.empty)
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error = R.string.couldnt_load)
+        if (response.isSuccessful) {
+            response.body()?.let { body ->
+                Resource.Success(data = body.toTracksFeatures())
+            } ?: Resource.Error(R.string.empty)
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 }

@@ -12,23 +12,19 @@ class GlobalRepositoryImpl(
     private val api: GlobalApi
 ) : GlobalRepository {
 
-    override suspend fun getTopGlobal(id: String): Resource<TopGlobalResponse> {
-        return try {
+    override suspend fun getTopGlobal(id: String): Resource<TopGlobalResponse> = try {
+        val response = api.getTopGlobal(id = id)
 
-            val response = api.getTopGlobal(id = id)
-
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body())
-            } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error =R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body())
+        } else {
+            response.errorBody()?.let {
                 Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 }

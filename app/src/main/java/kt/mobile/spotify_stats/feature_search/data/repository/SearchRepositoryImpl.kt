@@ -12,44 +12,40 @@ class SearchRepositoryImpl(
     private val api: SearchApi,
 ) : SearchRepository {
 
-    override suspend fun searchArtists(q: String): Resource<MySearchItems> {
-        return try {
+    override suspend fun searchArtists(q: String): Resource<MySearchItems> = try {
 
-            val response = api.searchArtists(q = q)
+        val response = api.searchArtists(q = q)
 
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toMySearchItems())
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error = R.string.couldnt_load)
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body()?.toMySearchItems())
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 
-    override suspend fun searchTracks(q: String): Resource<MySearchItems> {
-        return try {
+    override suspend fun searchTracks(q: String): Resource<MySearchItems> = try {
 
-            val response = api.searchTracks(q = q)
+        val response = api.searchTracks(q = q)
 
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toMySearchItems())
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(
-                error = R.string.couldnt_reach_server
-            )
-        } catch (e: HttpException) {
-            Resource.Error(error = R.string.couldnt_load)
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body()?.toMySearchItems())
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(
+            error = R.string.couldnt_reach_server
+        )
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 }

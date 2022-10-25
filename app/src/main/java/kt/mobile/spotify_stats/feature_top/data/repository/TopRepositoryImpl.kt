@@ -14,64 +14,57 @@ class TopRepositoryImpl(
     private val api: TopApi,
 ) : TopRepository {
 
+    override suspend fun getTopItems(time_range: String): Resource<TopTracks> = try {
 
-    override suspend fun getTopItems(time_range: String): Resource<TopTracks> {
-        return try {
+        val response = api.getTopItems(time_range = time_range)
 
-            val response = api.getTopItems(time_range = time_range)
-
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toTopTracks())
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error = R.string.couldnt_load)
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body()?.toTopTracks())
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 
-    override suspend fun getTracksFeatures(ids: String): Resource<TracksFeatures> {
-        return try {
+    override suspend fun getTracksFeatures(ids: String): Resource<TracksFeatures> = try {
 
-            val response = api.getTracksFeatures(ids = ids)
+        val response = api.getTracksFeatures(ids = ids)
 
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toTracksFeatures())
-            } else {
-                response.errorBody()?.let { error ->
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error =  R.string.couldnt_load)
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body()?.toTracksFeatures())
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 
-    override suspend fun getTopArtists(time_range: String): Resource<TopArtists> {
-        return try {
+    override suspend fun getTopArtists(time_range: String): Resource<TopArtists> = try {
 
-            val response = api.getTopArtists(time_range = time_range)
+        val response = api.getTopArtists(time_range = time_range)
 
-            if (response.isSuccessful) {
-                Resource.Success(data = response.body()?.toTopArtists())
-            } else {
-                response.errorBody()?.let {
-                    Resource.Error(error = R.string.couldnt_load)
-                } ?: Resource.Error(error = R.string.unknown_error)
-            }
-        } catch (e: IOException) {
-            Resource.Error(error = R.string.couldnt_reach_server)
-
-        } catch (e: HttpException) {
-            Resource.Error(error =  R.string.couldnt_load)
+        if (response.isSuccessful) {
+            Resource.Success(data = response.body()?.toTopArtists())
+        } else {
+            response.errorBody()?.let {
+                Resource.Error(error = R.string.couldnt_load)
+            } ?: Resource.Error(error = R.string.unknown_error)
         }
+    } catch (e: IOException) {
+        Resource.Error(error = R.string.couldnt_reach_server)
+
+    } catch (e: HttpException) {
+        Resource.Error(error = R.string.couldnt_load)
     }
 }
